@@ -1,0 +1,578 @@
+[
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 437.3,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 124.5,
+            "max_reward": 178.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 109.7,
+            "max_reward": 317.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 435.6,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 156.8,
+            "max_reward": 257.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 157.8,
+            "max_reward": 288.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 343.3,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 151.1,
+            "max_reward": 246.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 344.9,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 227.5,
+            "max_reward": 409.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 316.1,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.001,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 196.0,
+            "max_reward": 401.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 124.8,
+            "max_reward": 198.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 154.0,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 86.5,
+            "max_reward": 204.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 53.0,
+            "max_reward": 89.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 138.7,
+            "max_reward": 211.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 179.7,
+            "max_reward": 267.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 160.2,
+            "max_reward": 450.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 91.6,
+            "max_reward": 179.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 100.1,
+            "max_reward": 274.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 356.7,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 270.1,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.002,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 212.0,
+            "max_reward": 357.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 40.8,
+            "max_reward": 67.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 48.3,
+            "max_reward": 80.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 112.2,
+            "max_reward": 169.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 87.7,
+            "max_reward": 174.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 86.5,
+            "max_reward": 152.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.01,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 307.6,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 153.5,
+            "max_reward": 200.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.05,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 72.7,
+            "max_reward": 106.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 195.1,
+            "max_reward": 250.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.07,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 421.9,
+            "max_reward": 500.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.95
+        },
+        "results": {
+            "avg_reward": 103.4,
+            "max_reward": 144.0
+        }
+    },
+    {
+        "params": {
+            "train_episodes": 8000,
+            "decay": 0.003,
+            "max_steps": 500,
+            "eval_episodes": 1000,
+            "min_epsilon": 0.05,
+            "max_epsilon": 1.0,
+            "alpha": 0.1,
+            "discount_factor": 0.99
+        },
+        "results": {
+            "avg_reward": 374.7,
+            "max_reward": 500.0
+        }
+    }
+]

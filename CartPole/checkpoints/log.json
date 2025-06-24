@@ -1,0 +1,236 @@
+{
+	"qtable_best1.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.0015,
+				"discount_factor": 0.99,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 485.8,
+			"max_score": 500.0
+		},
+		"timestamp": "2025-06-23 23:44:07"
+	},
+	"qtable_best2.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.001,
+				"discount_factor": 0.97,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 369.7,
+			"max_score": 500.0
+		},
+		"timestamp": "2025-06-23 22:28:03"
+	},
+	"qtable_best3.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.0015,
+				"discount_factor": 0.99,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 313.7,
+			"max_score": 500.0
+		},
+		"timestamp": "2025-06-23 23:41:33"
+	},
+	"qtable_best4.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.0015,
+				"discount_factor": 0.99,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 300.5,
+			"max_score": 436.0
+		},
+		"timestamp": "2025-06-23 23:38:19"
+	},
+	"qtable_best5.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.0015,
+				"discount_factor": 0.99,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 296.8,
+			"max_score": 500.0
+		},
+		"timestamp": "2025-06-23 23:36:26"
+	},
+	"qtable_latest.npy": {
+		"params": {
+			"DISCRETIZATION_ARGS": {
+				"bins": [
+					12,
+					24,
+					24,
+					24
+				],
+				"high": [
+					4.8,
+					3.0,
+					0.418,
+					5.0
+				],
+				"low": [
+					-4.8,
+					-3.0,
+					-0.418,
+					-5.0
+				]
+			},
+			"Q_LEARN_ARGS": {
+				"alpha": 0.07,
+				"decay": 0.0015,
+				"discount_factor": 0.99,
+				"eval_episodes": 1000,
+				"max_epsilon": 1.0,
+				"max_steps": 500,
+				"min_epsilon": 0.01,
+				"train_episodes": 8000
+			}
+		},
+		"results": {
+			"avg_score": 146.7,
+			"max_score": 218.0
+		},
+		"timestamp": "2025-06-23 23:44:55"
+	}
+}
