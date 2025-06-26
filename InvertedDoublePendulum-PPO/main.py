@@ -5,7 +5,7 @@ import numpy as np
 # Import files from parent directory
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import utils
-import ppo_continuous as ppo
+import ppo_continuous2 as ppo
 
 # ---------------------------
 # Constants
@@ -13,15 +13,15 @@ import ppo_continuous as ppo
 
 HYPERPARAMETERS = {
 	"gamma": 0.99,			# Discount factor
-	"lr_actor": 0.0003,		# Actor learning rate
-	"lr_critic": 0.0005,	# Critic learning rate
-	"clip_ratio": 0.2,		# PPO clip ratio
+	"lr_actor": 0.0001,		# Actor learning rate
+	"lr_critic": 0.0002,	# Critic learning rate
+	"clip_ratio": 0.1,		# PPO clip ratio
 	"epochs": 20,			# Number of optimization epochs
-	"batch_size": 1024,		# Batch size for optimization
-	"max_episodes": 3000,
+	"batch_size": 256,		# Batch size for optimization
+	"max_episodes": 10000,
 	"max_steps_per_episode": 1000,
-	"converged_loss_range": 20,		# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
-	"converged_loss_threshold": 10,	# Theshold for terminating training early
+	"converged_loss_range": 100,	# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
+	"converged_loss_threshold": 5,	# Theshold for terminating training early
 	"normalize_state": True,
 }
 
