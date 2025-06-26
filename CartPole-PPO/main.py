@@ -41,7 +41,7 @@ args = parser.parse_args()
 # ---------------------------
 
 env = gym.make("CartPole-v1", render_mode="rgb_array")
-model = ppo.init(state_size=env.observation_space.shape[0], action_size=env.action_space.n)
+model = ppo.init(state_size=env.observation_space.shape[0], action_size=env.action_space.n, hyperparameters=HYPERPARAMETERS)
 
 # ---------------------------
 # Load model weights from file
