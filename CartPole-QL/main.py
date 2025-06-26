@@ -59,7 +59,7 @@ if args.load:
 	if args.load == "latest": filename = "qtable_latest"
 	elif args.load.startswith("best"): filename = f"qtable_{args.load}{'1' if args.load == 'best' else ''}"
 	if not filename.endswith(".npy"): filename += ".npy"
-	loaded, params, results = utils.load_qtable(filename=filename)
+	loaded, params, results = ql.load_qtable(filename=filename)
 	if loaded is not None:
 		Q = loaded
 		if "DISCRETIZATION_ARGS" in params: DISCRETIZATION_ARGS = params["DISCRETIZATION_ARGS"]
@@ -95,7 +95,7 @@ else:
 
 		if not args.no_save:
 			print("Saving...")
-			utils.save_qtable(
+			ql.save_qtable(
 				Q,
 				params = {
 					'Q_LEARN_ARGS': Q_LEARN_ARGS,
