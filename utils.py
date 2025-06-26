@@ -10,13 +10,14 @@ from datetime import datetime
 
 def plot(training_rewards, epsilons):
 	fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-	ax1.plot(training_rewards)
-	ax1.title.set_text('Reward for epsodes')
-	plt.ylabel('Training total reward')
-
-	ax2.plot(epsilons)
-	ax2.title.set_text("Epsilon for episodes")
-	plt.ylabel('Epsilon')
+	if training_rewards:
+		ax1.plot(training_rewards)
+		ax1.title.set_text('Reward for epsodes')
+		plt.ylabel('Training total reward')
+	if epsilons:
+		ax2.plot(epsilons)
+		ax2.title.set_text("Epsilon for episodes")
+		plt.ylabel('Epsilon')
 	plt.xlabel('Episode')
 	plt.show()
 
