@@ -12,17 +12,17 @@ import ppo_continuous as ppo
 # ---------------------------
 
 HYPERPARAMETERS = {
-	"gamma": 0.99,		# Discount factor
-	"lr_actor": 0.001,	# Actor learning rate
-	"lr_critic": 0.001,	# Critic learning rate
-	"clip_ratio": 0.2,	# PPO clip ratio
-	"epochs": 10,		# Number of optimization epochs
-	"batch_size": 64,	# Batch size for optimization
-	"max_episodes": 1000,
-	"max_steps_per_episode": 1000,
+	"gamma": 0.99,			# Discount factor
+	"lr_actor": 0.0003,		# Actor learning rate
+	"lr_critic": 0.0005,	# Critic learning rate
+	"clip_ratio": 0.2,		# PPO clip ratio
+	"epochs": 20,			# Number of optimization epochs
+	"batch_size": 1024,		# Batch size for optimization
+	"max_episodes": 5000,
+	"max_steps_per_episode": 2000,
 	"converged_loss_range": 20,		# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
 	"converged_loss_threshold": 10,	# Theshold for terminating training early
-	"normalize_state": False,
+	"normalize_state": True,
 }
 
 SIMULATION_SEED = 123

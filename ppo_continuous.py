@@ -178,7 +178,7 @@ def train(env, model, silent=False, partial_save=0):
 						print("Stopping early due to converged loss.")
 						results["early_stop"] = episode + 1
 						model.hyperparameters["max_episodes"] = episode + 1
-						break
+				break
 
 		if partial_save != 0 and episode % partial_save == 0: save_model(model, prefix=f"ppo_model_partial_{episode}")
 
