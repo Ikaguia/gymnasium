@@ -20,7 +20,7 @@ HYPERPARAMETERS = {
 	"batch_size": 256,		# Batch size for optimization
 	"entropy_bonus": 0.05,
 	"max_episodes": 3000,
-	"max_steps_per_episode": 600,
+	"max_steps_per_episode": 1000,
 	"converged_loss_range": 100,	# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
 	"converged_loss_threshold": 5,	# Theshold for terminating training early
 	"normalize_state": True,
@@ -59,7 +59,6 @@ if args.load:
 	filename = args.load
 	if filename == "latest": filename = "ppo_model_latest"
 	elif filename.startswith("best"): filename = f"ppo_model_{filename}{'1' if filename == 'best' else ''}"
-	if not filename.endswith(".weights.h5"): filename += ".weights.h5"
 	ppo.load_model(model, filename=filename)
 
 # ---------------------------

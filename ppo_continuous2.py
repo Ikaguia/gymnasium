@@ -48,6 +48,21 @@ class RunningNormalizer:
 		x_norm = (x - self.mean) / tf.sqrt(self.var + 1e-8)
 		return tf.clip_by_value(x_norm, -5.0, 5.0)  # Clipping after normalization
 
+    def save(self, filepath):
+        # Convert variables to numpy arrays and save
+        np.savez(filepath,
+                 mean=self.mean.numpy(),
+                 var=self.var.numpy(),
+                 count=self.count.numpy())
+
+    def load(self, filepath):
+        if not os.path.exists(filepath):
+            raise FileNotFoundError(f"No normalizer file found at {filepath}")
+        data = np.load(filepath)
+        self.mean.assign(data['mean'])
+        self.var.assign(data['var'])
+        self.count.assign(data['count'])
+
 # Actor and Critic networks for continuous action spaces
 class ActorCritic(tf.keras.Model):
 	def __init__(self, state_size, action_size, hyperparameters={}):
@@ -69,6 +84,7 @@ class ActorCritic(tf.keras.Model):
 			tf.keras.layers.Dense(64, activation='relu'),
 			tf.keras.layers.Dense(1)
 		])
+		self.normalizer = RunningNormalizer(state_size)
 
 	def call(self, state):
 		mean = self.actor_dense(state)
@@ -117,7 +133,6 @@ def init(state_size, action_size, hyperparameters={}):
 	return model
 
 def train(env, model, silent=False, partial_save=0):
-	normalizer = RunningNormalizer(model.state_size)
 	optimizer_actor = tf.keras.optimizers.Adam(learning_rate=model.hyperparameters["lr_actor"])
 	optimizer_critic = tf.keras.optimizers.Adam(learning_rate=model.hyperparameters["lr_critic"])
 
@@ -137,7 +152,7 @@ def train(env, model, silent=False, partial_save=0):
 
 			if model.hyperparameters["normalize_state"]:
 				# Use previously accumulated normalizer statistics — do not update here
-				norm_state = normalizer.normalize(state_tensor)
+				norm_state = model.normalizer.normalize(state_tensor)
 				mean, std, value = model(norm_state)
 				states.append(norm_state)
 			else:
@@ -171,8 +186,8 @@ def train(env, model, silent=False, partial_save=0):
 				# Update normalizer only after the full episode ends
 				if model.hyperparameters["normalize_state"]:
 					raw_batch = tf.concat(raw_states, axis=0)
-					normalizer.update(raw_batch)
-					states = normalizer.normalize(raw_batch)
+					model.normalizer.update(raw_batch)
+					states = model.normalizer.normalize(raw_batch)
 
 				old_means, old_stds, _ = model(states)
 				loss = ppo_loss(model, optimizer_actor, optimizer_critic, old_means, old_stds, values, states, actions, returns_batch)
@@ -204,15 +219,13 @@ def train(env, model, silent=False, partial_save=0):
 
 def simulate(env, model, max_steps=None, params={}):
 	state, _ = env.reset(**params)
-	normalizer = RunningNormalizer(model.state_size)
 	for step in range(max_steps or model.hyperparameters["max_steps_per_episode"]):
 		env.render()
 		state_tensor = tf.expand_dims(tf.convert_to_tensor(state, dtype=tf.float32), 0)
 
-		# Normalize state
+		# Normalize state using frozen normalizer stats (do NOT update during simulation)
 		if model.hyperparameters["normalize_state"]:
-			normalizer.update(state_tensor)
-			norm_state = normalizer.normalize(state_tensor)
+			norm_state = model.normalizer.normalize(state_tensor)
 			mean, std, _ = model(norm_state)
 		else:
 			mean, std, _ = model(state_tensor)
@@ -225,17 +238,24 @@ def simulate(env, model, max_steps=None, params={}):
 	else: return { "step": step, "reason": "max_steps" }
 
 def save_model(model, save_dir="checkpoints", prefix="ppo_model", results={}, metric="avg_score"):
-	if not os.path.exists(save_dir): os.mkdir(save_dir)
 	# TODO: Save hyperparameters and results, use metric
-	filename = prefix + ("" if prefix.endswith(".weights.h5") else ".weights.h5")
-	model.save_weights(os.path.join(save_dir, filename))
+	if not os.path.exists(save_dir): os.mkdir(save_dir)
+	prefix = prefix[:-11] if prefix.endswith(".weights.h5") else prefix
+	weights_filename = prefix + ".weights.h5"
+	normalizer_filename = prefix + ".normalizer.npz"
+	model.save_weights(os.path.join(save_dir, weights_filename))
+	model.normalizer.save(os.path.join(save_dir, normalizer_filename))
 
 def load_model(model, save_dir="checkpoints", filename="ppo_model"):
 	# Ensure model is "built" by passing dummy input
 	dummy_input = tf.random.uniform((1, model.state_size))
 	model(dummy_input)  # This builds the model layers
+
 	# TODO: Load hyperparameters and results
-	filename = filename + ("" if filename.endswith(".weights.h5") else ".weights.h5")
-	model.load_weights(os.path.join(save_dir, filename))
+	prefix = prefix[:-11] if filename.endswith(".weights.h5") else filename
+	weights_filename = prefix + ".weights.h5"
+	normalizer_filename = prefix + ".normalizer.npz"
+	model.load_weights(os.path.join(save_dir, weights_filename))
+	model.normalizer.load(os.path.join(save_dir, normalizer_filename))
 	# return results
 
