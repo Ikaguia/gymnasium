@@ -134,15 +134,22 @@ def train(env, model, silent=False, partial_save=0):
 			last_step = step == (model.hyperparameters["max_steps_per_episode"] - 1)
 			state_tensor = tf.expand_dims(tf.convert_to_tensor(state, dtype=tf.float32), 0)
 			raw_states.append(state_tensor)  # Collect raw (unnormalized) state
-			state = state_tensor  # Set for consistent shape below
 
-			# Sample dummy values; actual normalization happens after episode ends
-			states.append(state_tensor)
+			if model.hyperparameters["normalize_state"]:
+				normalizer.update(state_tensor)
+				norm_state = normalizer.normalize(state_tensor)
+				mean, std, value = model(norm_state)
+			else:
+				mean, std, value = model(state_tensor)
 
-			action = tf.zeros((model.action_size,))
+			action = tf.random.normal(shape=(model.action_size,), mean=tf.squeeze(mean), stddev=tf.squeeze(std))
 			action_clipped = tf.clip_by_value(action, env.action_space.low[0], env.action_space.high[0])
 			next_state, reward, done, truncated, _ = env.step(action_clipped.numpy())
+
+			states.append(norm_state if model.hyperparameters["normalize_state"] else state_tensor)
+			actions.append(tf.expand_dims(action, 0))
 			rewards.append(reward)
+			values.append(value)
 
 			state = next_state
 			episode_reward += reward  # Accumulate reward
@@ -155,13 +162,7 @@ def train(env, model, silent=False, partial_save=0):
 					returns_batch.append(discounted_sum)
 				returns_batch.reverse()
 
-				if model.hyperparameters["normalize_state"]:
-					raw_states_tensor = tf.concat(raw_states, axis=0)
-					normalizer.update(raw_states_tensor)
-					states = normalizer.normalize(raw_states_tensor)
-				else:
-					states = tf.concat(states, axis=0)
-
+				states = tf.concat(states, axis=0)
 				actions = tf.concat(actions, axis=0)
 				values = tf.concat(values, axis=0)
 				returns_batch = tf.convert_to_tensor(returns_batch, dtype=tf.float32)
