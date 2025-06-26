@@ -15,11 +15,12 @@ HYPERPARAMETERS = {
 	"gamma": 0.99,			# Discount factor
 	"lr_actor": 0.0001,		# Actor learning rate
 	"lr_critic": 0.0002,	# Critic learning rate
-	"clip_ratio": 0.1,		# PPO clip ratio
+	"clip_ratio": 0.05,		# PPO clip ratio
 	"epochs": 20,			# Number of optimization epochs
 	"batch_size": 256,		# Batch size for optimization
-	"max_episodes": 10000,
-	"max_steps_per_episode": 1000,
+	"entropy_bonus": 0.05,
+	"max_episodes": 3000,
+	"max_steps_per_episode": 600,
 	"converged_loss_range": 100,	# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
 	"converged_loss_threshold": 5,	# Theshold for terminating training early
 	"normalize_state": True,
@@ -38,7 +39,7 @@ parser.add_argument("--silent", action="store_true", help="Disable printing of l
 parser.add_argument("--no_plot", action="store_true", help="Disable plotting of learning values")
 parser.add_argument("--no_graphic", action="store_true", help="Disable graphic display for the final simulation")
 parser.add_argument("--no_save", action="store_true", help="Don't save model to file")
-parser.add_argument("--partial_save", default=0, type=int, help="Make a partial model save every X episodes (default: 0 for disabled)")
+parser.add_argument("--partial_save", default=500, type=int, help="Make a partial model save every X episodes (default: 500; 0 for disabled)")
 
 args = parser.parse_args()
 

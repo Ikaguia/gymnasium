@@ -12,6 +12,7 @@ HYPERPARAMETERS = {
 	"clip_ratio": 0.2,	# PPO clip ratio
 	"epochs": 10,		# Number of optimization epochs
 	"batch_size": 64,	# Batch size for optimization
+	"entropy_bonus": 0.05,
 	"max_episodes": 1000,
 	"max_steps_per_episode": 1000,
 	"converged_loss_range": 20,		# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
@@ -96,7 +97,7 @@ def compute_ppo_loss(model, old_means, old_stds, old_values, states, actions, re
 	policy_loss = -tf.reduce_mean(tf.minimum(ratio * advantages, clipped_ratio * advantages))
 	value_loss = tf.reduce_mean(tf.square(tf.squeeze(values) - returns))
 	entropy = tf.reduce_mean(gaussian_entropy(stds))
-	total_loss = policy_loss + 0.5 * value_loss - 0.001 * entropy
+	total_loss = policy_loss + 0.5 * value_loss - model.hyperparameters["entropy_bonus"] * entropy
 	return means, stds, values, policy_loss, value_loss, total_loss
 
 def ppo_loss(model, optimizer_actor, optimizer_critic, old_means, old_stds, old_values, states, actions, returns):
