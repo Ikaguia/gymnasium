@@ -48,6 +48,7 @@ args = parser.parse_args()
 
 env = gym.make("InvertedDoublePendulum-v5", render_mode="rgb_array")
 model = ppo.init(state_size=env.observation_space.shape[0], action_size=env.action_space.shape[0], hyperparameters=HYPERPARAMETERS)
+env.close()
 
 # ---------------------------
 # Load model weights from file
@@ -76,6 +77,8 @@ else:
 		print(f"{results=}")
 		if not args.no_plot: utils.plot(results["rewards"], None)
 
+		env.close()
+
 		# ---------------------------
 		# Save model weights to file
 		# ---------------------------
@@ -88,9 +91,10 @@ else:
 # Simulate using model
 # ---------------------------
 
-print("Simulating...")
-env = gym.make('InvertedDoublePendulum-v5', render_mode=("rgb_array" if args.no_graphic else "human"))
-results = ppo.simulate(env, model, max_steps=500, params={ "seed": SIMULATION_SEED })
-print(f'{results=}')
-
-env.close()
+for repeat in range(args.repeat):
+	if args.repeat > 1: print(f"Simulating ({repeat + 1})...")
+	else: print("Simulating...")
+	env = gym.make('InvertedDoublePendulum-v5', render_mode=("rgb_array" if args.no_graphic else "human"))
+	results = ppo.simulate(env, model, max_steps=500, params={ "seed": SIMULATION_SEED })
+	print(f'{results=}')
+	env.close()
