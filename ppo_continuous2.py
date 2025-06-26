@@ -126,8 +126,7 @@ def train(env, model, silent=False, partial_save=0):
 	episode_rewards = []  # Track total reward per episode
 
 	for episode in range(model.hyperparameters["max_episodes"]):
-		states, actions, rewards, values = [], [], [], []
-		raw_states = []  # Collect raw state tensors
+		raw_states, states, actions, rewards, values = [], [], [], [], []
 		state, _ = env.reset()
 		episode_reward = 0  # Initialize total reward for this episode
 
@@ -137,17 +136,18 @@ def train(env, model, silent=False, partial_save=0):
 			raw_states.append(state_tensor)  # Collect raw (unnormalized) state
 
 			if model.hyperparameters["normalize_state"]:
-				normalizer.update(state_tensor)
+				# Use previously accumulated normalizer statistics — do not update here
 				norm_state = normalizer.normalize(state_tensor)
 				mean, std, value = model(norm_state)
+				states.append(norm_state)
 			else:
 				mean, std, value = model(state_tensor)
+				states.append(state_tensor)
 
 			action = tf.random.normal(shape=(model.action_size,), mean=tf.squeeze(mean), stddev=tf.squeeze(std))
 			action_clipped = tf.clip_by_value(action, env.action_space.low[0], env.action_space.high[0])
 			next_state, reward, done, truncated, _ = env.step(action_clipped.numpy())
 
-			states.append(norm_state if model.hyperparameters["normalize_state"] else state_tensor)
 			actions.append(tf.expand_dims(action, 0))
 			rewards.append(reward)
 			values.append(value)
@@ -167,13 +167,20 @@ def train(env, model, silent=False, partial_save=0):
 				actions = tf.concat(actions, axis=0)
 				values = tf.concat(values, axis=0)
 				returns_batch = tf.convert_to_tensor(returns_batch, dtype=tf.float32)
-				old_means, old_stds, _ = model(states)
 
+				# Update normalizer only after the full episode ends
+				if model.hyperparameters["normalize_state"]:
+					raw_batch = tf.concat(raw_states, axis=0)
+					normalizer.update(raw_batch)
+					states = normalizer.normalize(raw_batch)
+
+				old_means, old_stds, _ = model(states)
 				loss = ppo_loss(model, optimizer_actor, optimizer_critic, old_means, old_stds, values, states, actions, returns_batch)
 				loss_history.append(float(loss))
-
-				if not silent: print(f"Episode: {(episode + 1):4d}, Reward: {episode_reward:7.2f}, Loss: {loss:9.4f}")
 				episode_rewards.append(episode_reward)
+
+				if not silent:
+					print(f"Episode: {(episode + 1):4d}, Reward: {episode_reward:7.2f}, Loss: {loss:9.4f}")
 
 				# Check if last X losses are within Y units of each other for early termination of training
 				if model.hyperparameters["converged_loss_range"] > 0 and len(loss_history) >= model.hyperparameters["converged_loss_range"]:
