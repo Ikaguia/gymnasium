@@ -16,7 +16,35 @@ HYPERPARAMETERS = {
 	"max_steps_per_episode": 1000,
 	"converged_loss_range": 20,		# How many episodes in a row have their loss within the threshold of each other for early termination. 0 for never terminate early.
 	"converged_loss_threshold": 10,	# Theshold for terminating training early
+	"normalize_state": True,
 }
+
+# Running mean and std tracker
+class RunningNormalizer:
+	def __init__(self, size, epsilon=1e-8):
+		self.mean = tf.Variable(tf.zeros(size), trainable=False)
+		self.var = tf.Variable(tf.ones(size), trainable=False)
+		self.count = tf.Variable(epsilon, trainable=False)
+
+	def update(self, x):
+		batch_mean = tf.reduce_mean(x, axis=0)
+		batch_var = tf.math.reduce_variance(x, axis=0)
+		batch_count = tf.cast(tf.shape(x)[0], tf.float32)
+
+		total_count = self.count + batch_count
+		delta = batch_mean - self.mean
+		new_mean = self.mean + delta * (batch_count / total_count)
+		m_a = self.var * self.count
+		m_b = batch_var * batch_count
+		M2 = m_a + m_b + tf.square(delta) * self.count * batch_count / total_count
+		new_var = M2 / total_count
+
+		self.mean.assign(new_mean)
+		self.var.assign(new_var)
+		self.count.assign(total_count)
+
+	def normalize(self, x):
+		return (x - self.mean) / tf.sqrt(self.var + 1e-8)
 
 # Actor and Critic networks for continuous action spaces
 class ActorCritic(tf.keras.Model):
@@ -84,7 +112,8 @@ def init(state_size, action_size, hyperparameters={}):
 	model = ActorCritic(state_size, action_size, hyperparameters)
 	return model
 
-def train(env, model, silent=False):
+def train(env, model, silent=False, partial_save=0):
+	normalizer = RunningNormalizer(model.state_size)
 	optimizer_actor = tf.keras.optimizers.Adam(learning_rate=model.hyperparameters["lr_actor"])
 	optimizer_critic = tf.keras.optimizers.Adam(learning_rate=model.hyperparameters["lr_critic"])
 
@@ -100,14 +129,21 @@ def train(env, model, silent=False):
 		for step in range(model.hyperparameters["max_steps_per_episode"]):
 			last_step = step == (model.hyperparameters["max_steps_per_episode"] - 1)
 			state_tensor = tf.expand_dims(tf.convert_to_tensor(state, dtype=tf.float32), 0)
-			mean, std, value = model(state_tensor)
+
+			# Normalize state
+			if model.hyperparameters["normalize_state"]:
+				normalizer.update(state_tensor)
+				norm_state = normalizer.normalize(state_tensor)
+				mean, std, value = model(norm_state)
+			else:
+				mean, std, value = model(state_tensor)
 
 			# Sample action from the policy distribution
 			action = tf.random.normal(shape=(model.action_size,), mean=tf.squeeze(mean), stddev=tf.squeeze(std))
 			action_clipped = tf.clip_by_value(action, env.action_space.low[0], env.action_space.high[0])
 			next_state, reward, done, truncated, _ = env.step(action_clipped.numpy())
 
-			states.append(state_tensor)
+			states.append(norm_state if model.hyperparameters["normalize_state"] else state_tensor)
 			actions.append(tf.expand_dims(action, 0))
 			rewards.append(reward)
 			values.append(value)
@@ -142,7 +178,10 @@ def train(env, model, silent=False):
 						print("Stopping early due to converged loss.")
 						results["early_stop"] = episode + 1
 						model.hyperparameters["max_episodes"] = episode + 1
-				break
+						break
+
+		if partial_save != 0 and episode % partial_save == 0: save_model(model, prefix=f"ppo_model_partial_{episode}")
+
 		if "early_stop" in results: break
 
 	return {
@@ -153,10 +192,18 @@ def train(env, model, silent=False):
 
 def simulate(env, model, max_steps=None, params={}):
 	state, _ = env.reset(**params)
+	normalizer = RunningNormalizer(model.state_size)
 	for step in range(max_steps or model.hyperparameters["max_steps_per_episode"]):
 		env.render()
 		state_tensor = tf.expand_dims(tf.convert_to_tensor(state, dtype=tf.float32), 0)
-		mean, std, _ = model(state_tensor)
+
+		# Normalize state
+		if model.hyperparameters["normalize_state"]:
+			normalizer.update(state_tensor)
+			norm_state = normalizer.normalize(state_tensor)
+			mean, std, _ = model(norm_state)
+		else:
+			mean, std, _ = model(state_tensor)
 
 		# Sample action from the policy distribution
 		action = tf.random.normal(shape=(model.action_size,), mean=tf.squeeze(mean), stddev=tf.squeeze(std))
@@ -165,7 +212,7 @@ def simulate(env, model, max_steps=None, params={}):
 		if done or truncated: return { "step": step, "reason": "done" if done else "truncated" }
 	else: return { "step": step, "reason": "max_steps" }
 
-def save_model(model, save_dir="checkpoints", prefix="ppo_model", hyperparameters={}, results={}, metric="avg_score"):
+def save_model(model, save_dir="checkpoints", prefix="ppo_model", results={}, metric="avg_score"):
 	if not os.path.exists(save_dir): os.mkdir(save_dir)
 	# TODO: Save hyperparameters and results, use metric
 	filename = prefix + ("" if prefix.endswith(".weights.h5") else ".weights.h5")
