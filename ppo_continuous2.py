@@ -48,20 +48,20 @@ class RunningNormalizer:
 		x_norm = (x - self.mean) / tf.sqrt(self.var + 1e-8)
 		return tf.clip_by_value(x_norm, -5.0, 5.0)  # Clipping after normalization
 
-    def save(self, filepath):
-        # Convert variables to numpy arrays and save
-        np.savez(filepath,
-                 mean=self.mean.numpy(),
-                 var=self.var.numpy(),
-                 count=self.count.numpy())
+	def save(self, filepath):
+		# Convert variables to numpy arrays and save
+		np.savez(filepath,
+				 mean=self.mean.numpy(),
+				 var=self.var.numpy(),
+				 count=self.count.numpy())
 
-    def load(self, filepath):
-        if not os.path.exists(filepath):
-            raise FileNotFoundError(f"No normalizer file found at {filepath}")
-        data = np.load(filepath)
-        self.mean.assign(data['mean'])
-        self.var.assign(data['var'])
-        self.count.assign(data['count'])
+	def load(self, filepath):
+		if not os.path.exists(filepath):
+			raise FileNotFoundError(f"No normalizer file found at {filepath}")
+		data = np.load(filepath)
+		self.mean.assign(data['mean'])
+		self.var.assign(data['var'])
+		self.count.assign(data['count'])
 
 # Actor and Critic networks for continuous action spaces
 class ActorCritic(tf.keras.Model):
